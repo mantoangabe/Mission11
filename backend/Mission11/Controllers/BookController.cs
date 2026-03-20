@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mission11.Models;
 
 namespace Mission11.Controllers;
@@ -15,9 +16,15 @@ public class BookController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetBooks(int pageSize = 10, int pageNumber = 1)
+    public IActionResult GetBooks(int pageSize = 10, int pageNumber = 1, string sortOrder = "asc")
     {
-        var books = _bookstoreContext.Books.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+        var booksQuery = _bookstoreContext.Books.AsQueryable();
+
+        booksQuery = sortOrder.ToLower() == "desc"
+            ? booksQuery.OrderByDescending(b => b.Title)
+            : booksQuery.OrderBy(b => b.Title);
+
+        var books = booksQuery.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         var totalCount = _bookstoreContext.Books.Count();
         return Ok(new
             {

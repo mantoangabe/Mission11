@@ -132,3 +132,4 @@ D:\Github\Mission11\backend\Mission11\obj\Debug\net8.0\refint\Mission11.dll
 D:\Github\Mission11\backend\Mission11\obj\Debug\net8.0\Mission11.pdb
 D:\Github\Mission11\backend\Mission11\obj\Debug\net8.0\Mission11.genruntimeconfig.cache
 D:\Github\Mission11\backend\Mission11\obj\Debug\net8.0\ref\Mission11.dll
+D:\Github\Mission11\backend\Mission11\obj\Debug\net8.0\Mission11.sourcelink.json
