@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react';
 import './BookList.css';
 import type { Book } from '../types/book';
+import { useNavigate } from 'react-router-dom';
 
-function BookList() {
+function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [books, setBooks] = useState<Book[]>([]);
   const [PageSize, setPageSize] = useState<number>(10);
   const [PageNumber, setPageNumber] = useState<number>(1);
   const [TotalItems, setTotalItems] = useState<number>(0);
   const [TotalPages, setTotalPages] = useState<number>(0);
   const [SortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const navigate = useNavigate();
   
   useEffect(() => {
     const fetchBooks = async () => {
+      const categoryParams = selectedCategories.map((cat) => `category=${encodeURIComponent(cat)}`).join('&');
       const response = await fetch(
-        `https://localhost:5000/api/Book?pageSize=${PageSize}&pageNumber=${PageNumber}&sortOrder=${SortOrder}`,
+        `https://localhost:5000/api/Book?pageSize=${PageSize}&pageNumber=${PageNumber}&sortOrder=${SortOrder}&${selectedCategories.length > 0 ? categoryParams : ''}`,
       );
       const data = await response.json();
       setBooks(data.books);
@@ -22,7 +25,7 @@ function BookList() {
       setTotalPages(calculatedPages);
     };
     fetchBooks();
-  }, [PageSize, PageNumber, SortOrder]);
+  }, [PageSize, PageNumber, SortOrder, selectedCategories]);
 
   return (
     <>
@@ -75,6 +78,9 @@ function BookList() {
                 <strong>Price:</strong> ${b.price?.toFixed(2)}
               </li>
               </ul>
+              <button className="btn btn-primary" onClick={() => navigate(`/buy/${b.title}/${b.bookId}`)}>
+              Buy
+            </button>
             </div>
           </div>
         ))}

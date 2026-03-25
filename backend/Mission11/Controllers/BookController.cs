@@ -16,21 +16,29 @@ public class BookController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetBooks(int pageSize = 10, int pageNumber = 1, string sortOrder = "asc")
+    public IActionResult GetBooks(int pageSize = 10, int pageNumber = 1, string sortOrder = "asc", [FromQuery] List<string>? category = null)
     {
-        var booksQuery = _bookstoreContext.Books.AsQueryable();
+        IQueryable<Book> query = _bookstoreContext.Books.AsQueryable();
+        if (category != null && category.Any())
+        {
+            query = query.Where(p => category.Contains(p.Category));
+        }
+        
+        query = sortOrder.ToLower() == "desc"
+            ? query.OrderByDescending(b => b.Title)
+            : query.OrderBy(b => b.Title);
+        var totalCount = query.Count();
 
-        booksQuery = sortOrder.ToLower() == "desc"
-            ? booksQuery.OrderByDescending(b => b.Title)
-            : booksQuery.OrderBy(b => b.Title);
-
-        var books = booksQuery.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-        var totalCount = _bookstoreContext.Books.Count();
+        var books = query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
         return Ok(new
-            {
-        Books = books,
-        TotalCount = totalCount});
-}
+        {
+            Books = books,
+            TotalCount = totalCount
+        });
+    }
 
     [HttpGet("GetCategories")]
     public IActionResult GetCategories()
