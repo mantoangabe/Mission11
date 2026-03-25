@@ -34,21 +34,23 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   return (
     <>
       <h1>Book List</h1>
-      <div className="book-controls">
-        <label>
-          Sort by title:
-          <select
-            value={SortOrder}
-            onChange={(e) => {
-              setSortOrder(e.target.value as 'asc' | 'desc');
-              setPageNumber(1);
-            }}
-          >
-            <option value="asc">A to Z</option>
-            <option value="desc">Z to A</option>
-          </select>
-        </label>
-      </div>
+<div className="book-controls mb-3">
+  <label htmlFor="sortOrder" className="form-label me-2 mb-0">
+    Sort by title:
+  </label>
+  <select
+    id="sortOrder"
+    className="form-select w-auto"
+    value={SortOrder}
+    onChange={(e) => {
+      setSortOrder(e.target.value as 'asc' | 'desc');
+      setPageNumber(1);
+    }}
+  >
+    <option value="asc">A to Z</option>
+    <option value="desc">Z to A</option>
+  </select>
+</div>
       <br />
       <div className="book-card-container">
         {books.map((b) => (
@@ -99,35 +101,52 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
           </div>
         ))}
       </div>
+
       <div className="book-pagination">
-        <button
-          disabled={PageNumber === 1}
-          onClick={() => setPageNumber((prev) => prev - 1)}
-        >
-          Previous
-        </button>
+        <nav aria-label="Book pagination">
+          <ul className="pagination justify-content-center">
+            <li className={`page-item ${PageNumber === 1 ? 'disabled' : ''}`}>
+              <button
+                className="page-link"
+                onClick={() => setPageNumber((prev) => prev - 1)}
+                disabled={PageNumber === 1}
+              >
+                Previous
+              </button>
+            </li>
 
-        {[...Array(TotalPages)].map((_, i) => (
-          <button
-            key={i + 1}
-            onClick={() => setPageNumber(i + 1)}
-            disabled={PageNumber === i + 1}
-          >
-            {i + 1}
-          </button>
-        ))}
+            {[...Array(TotalPages)].map((_, i) => (
+              <li
+                key={i + 1}
+                className={`page-item ${PageNumber === i + 1 ? 'active' : ''}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => setPageNumber(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              </li>
+            ))}
 
-        <button
-          disabled={PageNumber === TotalPages}
-          onClick={() => setPageNumber((prev) => prev + 1)}
-        >
-          Next
-        </button>
-        <br />
-        <label>
-          {' '}
+            <li
+              className={`page-item ${PageNumber === TotalPages ? 'disabled' : ''}`}
+            >
+              <button
+                className="page-link"
+                onClick={() => setPageNumber((prev) => prev + 1)}
+                disabled={PageNumber === TotalPages}
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        <label className="mt-2">
           Results per page:
           <select
+            className="form-select w-auto d-inline-block ms-2"
             value={PageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value));

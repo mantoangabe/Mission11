@@ -2,26 +2,20 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 const CartSummary = () => {
-    const navigate = useNavigate();
-    const {cartItems: cart} = useCart();
-    const totalAmount = cart.reduce((sum, item) => sum + item.price, 0);
-    return (
-        <div style={{
-            position: 'fixed',
-            top: '20px',
-            right: '20px',
-            background: '#0080ff',
-            padding: '10px 15px', 
-            borderRadius: '8px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
-            fontSize: 16,
-        }}
-        onClick={() => navigate('/cart')}>
-            🛒 <strong>${totalAmount.toFixed(2)}</strong>
-        </div>
-    );
-}
+  const navigate = useNavigate();
+  const { cartItems: cart } = useCart();
+  const totalAmount = cart.reduce((sum, item) => sum + item.price, 0);
+
+  return (
+    <button
+      type="button"
+      className="btn btn-primary position-fixed top-0 end-0 m-4 shadow d-flex align-items-center gap-2"
+      onClick={() => navigate('/cart')}
+    >
+      <span aria-hidden="true">🛒</span>
+      <strong>${totalAmount.toFixed(2)}</strong>
+    </button>
+  );
+};
+
 export default CartSummary;
