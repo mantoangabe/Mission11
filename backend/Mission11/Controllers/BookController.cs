@@ -31,4 +31,14 @@ public class BookController : ControllerBase
         Books = books,
         TotalCount = totalCount});
 }
+
+    [HttpGet("GetCategories")]
+    public IActionResult GetCategories()
+    {
+        var categories = _bookstoreContext.Books
+            .Select(p => p.Category)
+            .Distinct()
+            .ToList();
+        return Ok(categories);
+    }
 }

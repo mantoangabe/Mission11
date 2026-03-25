@@ -35,7 +35,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #000000;
+  color: var(--text-h);
 }
 
 .book-controls label {
