@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './BookList.css';
 import type { Book } from '../types/book';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [books, setBooks] = useState<Book[]>([]);
@@ -10,13 +11,16 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [TotalItems, setTotalItems] = useState<number>(0);
   const [TotalPages, setTotalPages] = useState<number>(0);
   const [SortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const { addToCart } = useCart();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const fetchBooks = async () => {
-      const categoryParams = selectedCategories.map((cat) => `category=${encodeURIComponent(cat)}`).join('&');
+      const categoryParams = selectedCategories
+        .map((cat) => `category=${encodeURIComponent(cat)}`)
+        .join('&');
       const response = await fetch(
-        `https://localhost:5000/api/Book?pageSize=${PageSize}&pageNumber=${PageNumber}&sortOrder=${SortOrder}&${selectedCategories.length > 0 ? categoryParams : ''}`,
+        `https://localhost:5000/api/Book?pageSize=${PageSize}&pageNumber=${PageNumber}&sortOrder=${SortOrder}&${selectedCategories.length > 0 ? categoryParams : ''}`
       );
       const data = await response.json();
       setBooks(data.books);
@@ -52,35 +56,45 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
             <h3 className="card-title">{b.title}</h3>
             <div className="card-body">
               <ul className="list-unstyled book-details-list">
-              <li>
-                {' '}
-                <strong>Author:</strong> {b.author}
-              </li>
-              <li>
-                {' '}
-                <strong>Publisher:</strong> {b.publisher}
-              </li>
-              <li>
-                {' '}
-                <strong>ISBN:</strong> {b.isbn}
-              </li>
-              <li>
-                {' '}
-                <strong>Classification:</strong> {b.classification}
-              </li>
-              <li>
-                <strong>Category:</strong> {b.category}
-              </li>
-              <li>
-                <strong>Page Count:</strong> {b.pageCount}
-              </li>
-              <li>
-                <strong>Price:</strong> ${b.price?.toFixed(2)}
-              </li>
+                <li>
+                  {' '}
+                  <strong>Author:</strong> {b.author}
+                </li>
+                <li>
+                  {' '}
+                  <strong>Publisher:</strong> {b.publisher}
+                </li>
+                <li>
+                  {' '}
+                  <strong>ISBN:</strong> {b.isbn}
+                </li>
+                <li>
+                  {' '}
+                  <strong>Classification:</strong> {b.classification}
+                </li>
+                <li>
+                  <strong>Category:</strong> {b.category}
+                </li>
+                <li>
+                  <strong>Page Count:</strong> {b.pageCount}
+                </li>
+                <li>
+                  <strong>Price:</strong> ${b.price?.toFixed(2)}
+                </li>
               </ul>
-              <button className="btn btn-primary" onClick={() => navigate(`/buy/${b.title}/${b.bookId}`)}>
-              Buy
-            </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  addToCart({
+                    BookId: b.bookId,
+                    title: b.title,
+                    price: b.price,
+                  });
+                  navigate('/cart');
+                }}
+              >
+                Buy
+              </button>
             </div>
           </div>
         ))}
@@ -130,4 +144,4 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   );
 }
 
-export default BookList; 
+export default BookList;

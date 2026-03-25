@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import { CartProvider } from './context/CartContext';
 import BookPage from './pages/BookPage';
+import CartPage from './pages/CartPage';
 
 function App() {
   return(
@@ -10,11 +11,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<BookPage />} />
-          <Route
-            path="/cart/:title/:BookId"
-            element={<div>Cart Page for Book</div>}
-          />
-          <Route path="/cart" element={<div>Cart Page</div>} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </Router>
     </CartProvider>
