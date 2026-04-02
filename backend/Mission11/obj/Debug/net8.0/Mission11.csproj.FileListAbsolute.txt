@@ -133,3 +133,11 @@ D:\Github\Mission11\backend\Mission11\obj\Debug\net8.0\Mission11.pdb
 D:\Github\Mission11\backend\Mission11\obj\Debug\net8.0\Mission11.genruntimeconfig.cache
 D:\Github\Mission11\backend\Mission11\obj\Debug\net8.0\ref\Mission11.dll
 D:\Github\Mission11\backend\Mission11\obj\Debug\net8.0\Mission11.sourcelink.json
+D:\Github\Mission11\backend\Mission11\bin\Debug\net8.0\publish\web.config
+D:\Github\Mission11\backend\Mission11\bin\Debug\net8.0\publish\appsettings.Development.json
+D:\Github\Mission11\backend\Mission11\bin\Debug\net8.0\publish\appsettings.json
+D:\Github\Mission11\backend\Mission11\bin\Debug\net8.0\publish\global.json
+D:\Github\Mission11\backend\Mission11\bin\Debug\net8.0\publish\Mission11.deps.json
+D:\Github\Mission11\backend\Mission11\bin\Debug\net8.0\publish\Mission11.runtimeconfig.json
+D:\Github\Mission11\backend\Mission11\bin\Debug\net8.0\Bookstore.sqlite
+D:\Github\Mission11\backend\Mission11\bin\Debug\net8.0\Data\Bookstore.sqlite
