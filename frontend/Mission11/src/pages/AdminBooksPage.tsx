@@ -16,7 +16,7 @@ const AdminBooksPage = () => {
 
 	const fetchBooks = async (size: number, page: number) => {
 		const response = await fetch(
-			`https://localhost:5000/api/Book?pageSize=${size}&pageNumber=${page}`
+			`https://bookstore-backend-d4g0hcbfbhaxgjbh.francecentral-01.azurewebsites.net/api/Book?pageSize=${size}&pageNumber=${page}`
 		);
 
 		if (!response.ok) {

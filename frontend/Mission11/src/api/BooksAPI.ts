@@ -1,6 +1,6 @@
 import { type Book } from '../types/book';
 
-const API_URL = 'https://localhost:5000/api/Book';
+const API_URL = 'https://bookstore-backend-d4g0hcbfbhaxgjbh.francecentral-01.azurewebsites.net/api/Book';
 
 export const addBook = async (newBook: Book): Promise<Book> => {
   try {
@@ -28,27 +28,13 @@ export const updateBook = async (
   updatedBook: Book
 ): Promise<Book> => {
   try {
-    let response = await fetch(`${API_URL}/UpdateBook/${bookId}`, {
+    const response = await fetch(`${API_URL}/UpdateBook/${bookId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(updatedBook),
     });
-
-    if (response.status === 405) {
-      response = await fetch(`${API_URL}/UpdateBook/${bookId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedBook),
-      });
-    }
-
-    if (!response.ok) {
-      throw new Error('Failed to update book');
-    }
 
     return await response.json();
   } catch (error) {

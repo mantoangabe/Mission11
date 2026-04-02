@@ -20,7 +20,7 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
         .map((cat) => `category=${encodeURIComponent(cat)}`)
         .join('&');
       const response = await fetch(
-        `https://localhost:5000/api/Book?pageSize=${PageSize}&pageNumber=${PageNumber}&sortOrder=${SortOrder}&${selectedCategories.length > 0 ? categoryParams : ''}`
+        `https://bookstore-backend-d4g0hcbfbhaxgjbh.francecentral-01.azurewebsites.net/api/Book?pageSize=${PageSize}&pageNumber=${PageNumber}&sortOrder=${SortOrder}&${selectedCategories.length > 0 ? categoryParams : ''}`
       );
       const data = await response.json();
       setBooks(data.books);
