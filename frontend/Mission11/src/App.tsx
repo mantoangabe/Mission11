@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { CartProvider } from './context/CartContext';
 import BookPage from './pages/BookPage';
 import CartPage from './pages/CartPage';
+import AdminBooksPage from './pages/AdminBooksPage';
 
 function App() {
   return(
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<BookPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/admin" element={<AdminBooksPage />} />
         </Routes>
       </Router>
     </CartProvider>

@@ -57,10 +57,16 @@ public class BookController : ControllerBase
         return Ok(book);
     }
 
-    [HttpPost("UpdateBook/{bookId}")]
-    public IActionResult UpdateBook([FromBody] Book book)
+    [HttpPut("UpdateBook/{bookId}")]
+    public IActionResult UpdateBook(int bookId, [FromBody] Book book)
     {
-        var existingBook = _bookstoreContext.Books.Find(book);
+        var existingBook = _bookstoreContext.Books.Find(bookId);
+
+        if (existingBook == null)
+        {
+            return NotFound();
+        }
+
         existingBook.Title =  book.Title;
         existingBook.Author = book.Author;
         existingBook.Publisher = book.Publisher;
@@ -70,10 +76,10 @@ public class BookController : ControllerBase
         existingBook.PageCount = book.PageCount;
         existingBook.Price = book.Price;
         _bookstoreContext.SaveChanges();
-        return Ok(book);
+        return Ok(existingBook);
     }
 
-    [HttpPost("DeleteBook/{bookId}")]
+    [HttpDelete("DeleteBook/{bookId}")]
     public IActionResult DeleteBook(int bookId)
     {
         var book = _bookstoreContext.Books.Find(bookId);
