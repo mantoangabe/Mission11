@@ -15,7 +15,7 @@ builder.Services.AddDbContext<BookstoreContext>(options =>
 builder.Services.AddCors(options => options.AddPolicy("AllowReactApp",
     policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "https://proud-plant-07730701e.2.azurestaticapps.net")
+        policy.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
     }));
