@@ -1,6 +1,5 @@
 import './index.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
 import { CartProvider } from './context/CartContext';
 import BookPage from './pages/BookPage';
 import CartPage from './pages/CartPage';

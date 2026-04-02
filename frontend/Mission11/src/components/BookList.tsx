@@ -25,7 +25,7 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
       const data = await response.json();
       setBooks(data.books);
       setTotalItems(data.totalCount);
-      const calculatedPages = Math.ceil(data.totalCount / PageSize);
+      const calculatedPages = Math.ceil(TotalItems / PageSize);
       setTotalPages(calculatedPages);
     };
     fetchBooks();
